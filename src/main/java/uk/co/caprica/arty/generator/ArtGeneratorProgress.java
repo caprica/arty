@@ -29,7 +29,7 @@ public interface ArtGeneratorProgress {
     /**
      * Art generation is about to begin for a particular file.
      *
-     * @param current index of the current file within the collection
+     * @param current number (1-based) of the current file within the collection
      * @param total total number of files in the collection
      * @param filePath path of the current file being processed, relative to the source root path
      */
@@ -38,7 +38,7 @@ public interface ArtGeneratorProgress {
     /**
      * Art generation is done for a particular file.
      *
-     * @param current index of the current file within the collection
+     * @param current number (1-based) index of the current file within the collection
      * @param total total number of files in the collection
      * @param filePath path of the current file being processed, relative to the source root path
      */
