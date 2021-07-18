@@ -4,7 +4,7 @@
 
     <groupId>uk.co.caprica</groupId>
     <artifactId>arty</artifactId>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.2</version>
 
     <name>arty</name>
     <description>Artwork utilities.</description>
@@ -52,7 +52,7 @@
         <connection>scm:git:git@github.com:caprica/arty.git</connection>
         <developerConnection>scm:git:git@github.com:caprica/arty.git</developerConnection>
         <url>git@github.com:caprica/arty.git</url>
-        <tag>HEAD</tag>
+        <tag>arty-0.1.2</tag>
     </scm>
 
     <profiles>
