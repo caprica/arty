@@ -33,30 +33,28 @@ final public class ArtCompositor {
 
     /**
      * Compose a collection of image files into a grid.
-     * <p>
-     * Any images that can not be loaded will be skipped without error.
      *
-     * @param paths collection of image file paths
+     * @param paths collection if image file paths
      * @param targetSize size of the target image (a square grid, so width and height will be the same)
      * @param maxGridCells maximum number of grid cells to use
      * @return composite image
+     * @throws IOException if an error occurs when reading or writing an image file
      */
-    public BufferedImage compose(List<Path> paths, int targetSize, int maxGridCells) {
+    public BufferedImage compose(List<Path> paths, int targetSize, int maxGridCells) throws IOException {
         return compose(paths, targetSize, maxGridCells, null);
     }
 
     /**
      * Compose a collection of image files into a grid.
-     * <p>
-     * Any images that can not be loaded will be skipped without error.
      *
-     * @param paths collection of image file paths
+     * @param paths collection if image file paths
      * @param targetSize size of the target image (a square grid, so width and height will be the same)
      * @param maxGridCells maximum number of grid cells to use
      * @param backgroundColour optional background colour for the image (in case of gaps due to integer division when calculating grid cell sizes)
      * @return composite image
+     * @throws IOException if an error occurs when reading or writing an image file
      */
-    public BufferedImage compose(List<Path> paths, int targetSize, int maxGridCells, Color backgroundColour) {
+    public BufferedImage compose(List<Path> paths, int targetSize, int maxGridCells, Color backgroundColour) throws IOException {
         BufferedImage targetImage = new BufferedImage(targetSize, targetSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = (Graphics2D) targetImage.getGraphics();
         if (backgroundColour != null) {
@@ -76,14 +74,10 @@ final public class ArtCompositor {
                 if (imageCount == 2) {
                     i = row ^ col;
                 }
+                BufferedImage sourceImage = ImageIO.read(paths.get(i % imageCount).toFile());
                 int gridCellSize = gridCellSizes[col];
-                try {
-                    BufferedImage sourceImage = ImageIO.read(paths.get(i % imageCount).toFile());
-                    Image scaledImage = sourceImage.getScaledInstance(gridCellSize, gridCellSize, Image.SCALE_SMOOTH);
-                    g2.drawImage(scaledImage, x, y, null);
-                } catch (IOException e) {
-                    // Skip this image and continue
-                }
+                Image scaledImage = sourceImage.getScaledInstance(gridCellSize, gridCellSize, Image.SCALE_SMOOTH);
+                g2.drawImage(scaledImage, x, y, null);
                 x += gridCellSize;
                 i++;
             }
